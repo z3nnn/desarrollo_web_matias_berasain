@@ -1,5 +1,6 @@
+# CC5002-2  Desarrollo de Aplicaciones Web - Otoño 2025
 
-# Página web para mostrar actividades recreativas
+## Página web para mostrar actividades recreativas
 
 La idea de este proyecto es poder mostrar en una aplicación web que permita gestionar actividades recreativas, cuenta con una portada donde hay enlaces a otras páginas para:
 
