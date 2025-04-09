@@ -16,4 +16,3 @@ La idea de este proyecto es poder mostrar en una aplicación web que permita ges
 - Las estadisticas fueron hechas matplotlib en python como imagenes estáticas, en un futuro se planea hacerlas con chart.js
 
 
-
