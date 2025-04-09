@@ -1,0 +1,98 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Listado de actividades</title>
+  <link rel="stylesheet" href="css/estilos.css">
+  <script src="js/listado.js" defer></script>
+</head>
+<body>
+  <header>
+    <h1>Listado de Actividades</h1>
+    <nav>
+      <ul class="menu">
+        <li><a href="index.html">Portada</a></li>
+        <li><a href="agregar.html">Agregar Actividad</a></li>
+        <li><a href="estadisticas.html">Estadísticas</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="main-container">
+    <section>
+      <h2>Listado de Actividades</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Inicio</th>
+            <th>Término</th>
+            <th>Comuna</th>
+            <th>Sector</th>
+            <th>Tema</th>
+            <th>Organizador</th>
+            <th>Fotos</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr onclick="mostrarDetalle(0)">
+            <td>2025-04-01 10:00</td>
+            <td>2025-04-01 12:00</td>
+            <td>Providencia</td>
+            <td>Biblioteca Central</td>
+            <td>Ciencias</td>
+            <td>José Maza</td>
+            <td>2</td>
+          </tr>
+          <tr onclick="mostrarDetalle(1)">
+            <td>2025-04-02 18:00</td>
+            <td>2025-04-02 20:00</td>
+            <td>Santiago</td>
+            <td>Parque O'Higgins</td>
+            <td>Música</td>
+            <td>Jorge Drexler</td>
+            <td>2</td>
+          </tr>
+          <tr onclick="mostrarDetalle(2)">
+            <td>2025-04-03 14:25</td>
+            <td>2025-04-03 15:25</td>
+            <td>Las Condes</td>
+            <td>Empresa</td>
+            <td>Tecnología</td>
+            <td>Bill Gates</td>
+            <td>2</td>
+          </tr>
+          <tr onclick="mostrarDetalle(3)">
+            <td>2025-04-04 16:45</td>
+            <td>2025-04-04 18:45</td>
+            <td>Ñuñoa</td>
+            <td>Centro de videojuegos</td>
+            <td>Juegos</td>
+            <td>Insert Coin</td>
+            <td>2</td>
+          </tr>
+          <tr onclick="mostrarDetalle(4)">
+            <td>2025-04-05 09:00</td>
+            <td>2025-04-05 10:00</td>
+            <td>La Reina</td>
+            <td>Estadio Bicentenario</td>
+            <td>Deporte</td>
+            <td>Alexis Sanchez</td>
+            <td>2</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <section id="detalle-actividad" style="display:none;">
+        <h2 style="display:none;">Detalle de Actividad</h2>
+      </section>
+
+      <dialog id="foto-dialog">
+        <img id="foto-grande" src="img/placeholder.png" width="800" height="600" alt="Foto ampliada">
+        <br>
+        <button onclick="cerrarFoto()">Cerrar</button>
+      </dialog>
+    </section>
+  </main>
+</body>
+</html>

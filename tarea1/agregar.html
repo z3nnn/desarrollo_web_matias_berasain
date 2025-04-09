@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8">
+    <title>Agregar actividad</title>
+    <link rel="stylesheet" href="css/estilos.css">
+    <!-- script para añadir las comunas y regiones -->
+    <script src="js/region_comuna.js"></script>
+    <!-- script para las validaciones -->
+    <script src="js/validaciones.js" defer></script>
+  </head>
+  <body>
+    <header>
+      <h1>Agregar Nueva Actividad</h1>
+      <nav>
+        <ul class="menu">
+          <li><a href="index.html">Portada</a></li>
+          <li><a href="listado.html">Ver listado</a></li>
+          <li><a href="estadisticas.html">Estadísticas</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <form id="form-actividad">
+
+        <!-- información del lugar -->
+        <section>
+          <h2>¿Dónde?</h2>
+          <label for="region">Región:
+            <select id="region" name="region" required>
+              <option value="">Seleccione región</option>
+            </select>
+          </label>
+          <br><br>
+          <label for="comuna">Comuna:
+            <select id="comuna" name="comuna" required>
+              <option value="">Seleccione comuna</option>
+            </select>
+          </label>
+          <br><br>
+          <label for="sector">Sector:
+            <input type="text" id="sector" name="sector" maxlength="100" placeholder="Ej: Parque, calle, lugar específico...">
+          </label>
+        </section>
+
+        <!-- datos del organizador -->
+        <section>
+          <h2>¿Quién organiza?</h2>
+          <label for="nombre">Nombre:
+            <input type="text" id="nombre" name="nombre" maxlength="200" required>
+          </label>
+          <br><br>
+          <label for="email">Email:
+            <input type="email" id="email" name="email" maxlength="100" required>
+          </label>
+          <br><br>
+          <label for="celular">Celular:
+            <input type="tel" id="celular" name="celular" placeholder="+569.12345678">
+          </label>
+          <br><br>
+          <label for="contactar">Contactar por:
+            <select id="contactar" name="contactar">
+              <option value="">Seleccione red</option>
+              <option value="whatsapp">WhatsApp</option>
+              <option value="telegram">Telegram</option>
+              <option value="x">X</option>
+              <option value="instagram">Instagram</option>
+              <option value="tiktok">TikTok</option>
+              <option value="otro">Otra</option>
+            </select>
+          </label>
+          <div id="contacto-extra" style="display:none;">
+            <label for="contacto-id">ID o URL:
+              <input type="text" id="contacto-id" name="contacto-id" minlength="4" maxlength="50">
+            </label>
+          </div>
+        </section>
+
+        <!-- información de la actividad -->
+        <section>
+          <h2>¿Cuándo y de qué trata?</h2>
+          <label for="inicio">Inicio:
+            <input type="datetime-local" id="inicio" name="inicio" required>
+          </label>
+          <br><br>
+          <label for="termino">Término:
+            <input type="datetime-local" id="termino" name="termino">
+          </label>
+          <br><br>
+          <label for="descripcion">Descripción:
+            <br>
+            <textarea id="descripcion" name="descripcion" cols="50" rows="10"></textarea>
+          </label>
+          <br><br>
+          <label for="tema">Tema:
+            <select id="tema" name="tema" required>
+              <option value="" disabled selected hidden>Seleccione un tema</option>
+              <option value="música">Música</option>
+              <option value="deporte">Deporte</option>
+              <option value="ciencias">Ciencias</option>
+              <option value="religión">Religión</option>
+              <option value="política">Política</option>
+              <option value="tecnología">Tecnología</option>
+              <option value="juegos">Juegos</option>
+              <option value="baile">Baile</option>
+              <option value="comida">Comida</option>
+              <option value="otro">Otro</option>
+            </select>
+          </label>
+          <div id="tema-extra" style="display:none;">
+            <label for="tema-descripcion">Especifique tema:
+              <input type="text" id="tema-descripcion" minlength="3" maxlength="15">
+            </label>
+          </div>
+          <br><br>
+          <div id="fotos">
+            <label for="foto1">Foto:
+              <input type="file" name="foto[]" id="foto1" accept="image/*" required>
+            </label>
+          </div>
+          <button type="button" id="agregar-foto" style="margin-top: 10px;">
+            Agregar otra foto
+          </button>
+        </section>
+
+        <br><br>
+        <button type="submit">Agregar esta actividad</button>
+      </form>
+
+      <dialog id="confirm-dialog">
+        <p>¿Está seguro que desea agregar esta actividad?</p>
+        <button id="confirm-si">Sí, estoy seguro</button>
+        <button id="confirm-no">No, quiero volver al formulario</button>
+      </dialog>
+
+      <dialog id="gracias-dialog">
+        <p>Hemos recibido su información, muchas gracias y suerte en su actividad.</p>
+        <a href="index.html" class="boton-volver">Volver a la portada</a>
+      </dialog>
+    </main>
+  </body>
+</html>
