@@ -14,6 +14,6 @@ La idea de este proyecto es poder mostrar en una aplicación web que permita ges
 - Se usó un css basico con colores azules para las barras y los botones, con letras blancas
 - Se realizaron las validaciones de los campos para agregar con javascript, para la comuna se utilizó el archivo "region_comuna.js" subido a material docente
 - Para el listado también se utilizó javascript para que al hacer click se mostrara la información en especifico, asi como también para agrandar las fotos
-- Las estadisticas fueron hechas matplotlib en python como imagenes estáticas, en un futuro se planea hacerlas con chart.js
+- Las estadisticas fueron hechas matplotlib en python como imagenes estáticas, en un futuro se planea hacerlas con chart.js u otra alternativa
 
 
