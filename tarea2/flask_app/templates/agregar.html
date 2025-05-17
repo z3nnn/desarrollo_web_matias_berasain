@@ -3,45 +3,52 @@
   <head>
     <meta charset="UTF-8">
     <title>Agregar actividad</title>
-    <link rel="stylesheet" href="css/estilos.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}">
     <!-- script para añadir las comunas y regiones -->
-    <script src="js/region_comuna.js"></script>
+    <!-- <script src="js/region_comuna.js"></script> -->
     <!-- script para las validaciones -->
-    <script src="js/validaciones.js" defer></script>
+    <script src="{{ url_for('static', filename='js/validaciones.js') }}" defer></script>
   </head>
   <body>
     <header>
       <h1>Agregar Nueva Actividad</h1>
       <nav>
         <ul class="menu">
-          <li><a href="index.html">Portada</a></li>
-          <li><a href="listado.html">Ver listado</a></li>
-          <li><a href="estadisticas.html">Estadísticas</a></li>
+          <li><a href="{{ url_for('index') }}">Portada</a></li>
+          <li><a href="{{ url_for('listado') }}">Ver listado</a></li>
+          <li><a href="{{ url_for('estadisticas') }}">Estadísticas</a></li>
         </ul>
       </nav>
     </header>
 
     <main>
-      <form id="form-actividad">
+      <form id="form-actividad" action="{{ url_for('agregar') }}" method="post" enctype="multipart/form-data">
 
         <!-- información del lugar -->
         <section>
           <h2>¿Dónde?</h2>
           <label for="region">Región:
             <select id="region" name="region" required>
-              <option value="">Seleccione región</option>
+              <option value="">Seleccione una región</option>
+              {% for region in regiones %}
+                <option value="{{ region.id }}">{{ region.nombre }}</option>
+              {% endfor %}
             </select>
           </label>
           <br><br>
           <label for="comuna">Comuna:
             <select id="comuna" name="comuna" required>
-              <option value="">Seleccione comuna</option>
+              <option value="">Seleccione una comuna</option>
+              {% for comuna in comunas %}
+                <option value="{{ comuna.id }}">{{ comuna.nombre }}</option>
+              {% endfor %}
             </select>
           </label>
           <br><br>
           <label for="sector">Sector:
-            <input type="text" id="sector" name="sector" maxlength="100" placeholder="Ej: Parque, calle, lugar específico...">
+            <input type="text" id="sector" name="sector" maxlength="100">
           </label>
+          
         </section>
 
         <!-- datos del organizador -->
@@ -136,7 +143,7 @@
 
       <dialog id="gracias-dialog">
         <p>Hemos recibido su información, muchas gracias y suerte en su actividad.</p>
-        <a href="index.html" class="boton-volver">Volver a la portada</a>
+        <a href="{{ url_for('index') }}" class="boton-volver">Volver a la portada</a>
       </dialog>
     </main>
   </body>

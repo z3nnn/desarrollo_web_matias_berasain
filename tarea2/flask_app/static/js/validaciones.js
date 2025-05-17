@@ -20,30 +20,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const form = document.getElementById("form-actividad");
 
-  // cargar regiones en el select
-  region_comuna.regiones.forEach(region => {
-    const opt = document.createElement("option");
-    opt.value = region.nombre;
-    opt.textContent = region.nombre;
-    regionSelect.appendChild(opt);
-  });
-
-  // cargar comunas según la región seleccionada
-  regionSelect.addEventListener("change", function () {
-    const nombreRegion = this.value;
-    comunaSelect.innerHTML = '<option value="">Seleccione comuna</option>';
-
-    const region = region_comuna.regiones.find(r => r.nombre === nombreRegion);
-    if (region) {
-      region.comunas.forEach(comuna => {
-        const opt = document.createElement("option");
-        opt.value = comuna.nombre;
-        opt.textContent = comuna.nombre;
-        comunaSelect.appendChild(opt);
-      });
-    }
-  });
-
   // mostrar campo adicional si red social o tema es "otro"
   contactarSelect.addEventListener("change", function () {
     contactoExtra.style.display = this.value ? "block" : "none";
@@ -83,8 +59,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // cerrar el dialogo si la respuesta es si y resetear el formulario
   document.getElementById("confirm-si").addEventListener("click", () => {
     confirmDialog.close();
-    graciasDialog.showModal();
-    form.reset();
+    form.submit();
   });
 
   // cerrar el dialogo si la respuesta es no
