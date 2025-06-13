@@ -7,6 +7,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Estadísticas</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}">
+  <script src="https://code.highcharts.com/highcharts.js"></script>
+  <script src="{{ url_for('static', filename='js/estadisticas.js') }}"></script>
 </head>
 
 <body>
@@ -27,21 +29,21 @@
     <section>
       <h2>1. Cantidad de actividades por día</h2>
       <div style="text-align: center;">
-        <img src="{{ url_for('static', filename='img/estadisticas/lineas_dias.png') }}" alt="Gráfico de líneas que muestra la cantidad de actividades por día" width="600">
+        <div id="grafico-lineas" style="width: 600px; height: 400px; margin: auto;"></div>
       </div>
     </section>
 
     <section>
       <h2>2. Total de actividades por tipo</h2>
       <div style="text-align: center;">
-        <img src="{{ url_for('static', filename='img/estadisticas/torta_tipos.png') }}" alt="Gráfico de torta que muestra el total de actividades por tipo" width="600">
+        <div id="grafico-torta" style="width: 600px; height: 400px; margin: auto;"></div>
       </div>
     </section>
 
     <section>
       <h2>3. Actividades por mes y horario</h2>
       <div style="text-align: center;">
-        <img src="{{ url_for('static', filename='img/estadisticas/barras_horarios.png') }}" alt="Gráfico de barras que muestra actividades por mes y horario" width="700">
+        <div id="grafico-barras" style="width: 700px; height: 400px; margin: auto;"></div>
       </div>
     </section>
 

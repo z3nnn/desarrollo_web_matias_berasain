@@ -68,3 +68,12 @@ class ContactarPor(Base):
     nombre = Column(String(50), nullable=False)
     identificador = Column(String(150), nullable=False)
     actividad_id = Column(Integer, ForeignKey('actividad.id'), nullable=False)
+
+class Comentario(Base):
+    __tablename__ = 'comentario'
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    nombre = Column(String(80), nullable=False)
+    texto = Column(String(300), nullable=False)
+    fecha = Column(DateTime, nullable=False)
+    actividad_id = Column(Integer, ForeignKey('actividad.id'), nullable=False)
+    actividad = relationship('Actividad', backref='comentarios')

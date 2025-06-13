@@ -4,7 +4,12 @@ from datetime import datetime
 import os
 
 from database import db
-from database.db import SessionLocal, Region, Comuna, Actividad, Foto, ActividadTema, ContactarPor
+from database.db import SessionLocal, Region, Comuna, Actividad, Foto, ActividadTema, ContactarPor, Comentario
+
+# estadisticas
+from flask import jsonify
+from sqlalchemy import func
+from collections import defaultdict
 
 UPLOAD_FOLDER = 'static/uploads'
 
@@ -132,7 +137,15 @@ def listado():
             "organizador": act.nombre,
             "descripcion": act.descripcion,
             "fotos": [f"uploads/{foto.nombre_archivo}" for foto in act.fotos],
-            "foto_count": len(act.fotos)
+            "foto_count": len(act.fotos),
+            "comentarios": [
+                {
+                    "nombre": comentario.nombre,
+                    "texto": comentario.texto,
+                    "fecha": comentario.fecha.strftime("%Y-%m-%d %H:%M")
+                }
+                for comentario in act.comentarios
+            ]
         })
 
     session_db.close()
@@ -152,6 +165,90 @@ def listado():
 @app.route("/estadisticas")
 def estadisticas():
     return render_template("estadisticas.html")
+
+@app.route("/comentar/<int:actividad_id>", methods=["POST"])
+def comentar(actividad_id):
+    payload = request.get_json() or {}
+    nombre  = payload.get("nombre", "").strip()
+    texto   = payload.get("texto", "").strip()
+
+    # validacion por el lado del server
+    if not (3 <= len(nombre) <= 80):
+        return jsonify(error="Nombre debe tener entre 3 y 80 caracteres"), 400
+    if len(texto) < 5:
+        return jsonify(error="Comentario debe ser de al menos 5 caracteres"), 400
+
+    session_db = SessionLocal()
+    comentario = Comentario(
+        nombre=nombre,
+        texto=texto,
+        fecha=datetime.now(),
+        actividad_id=actividad_id
+    )
+    session_db.add(comentario)
+    session_db.commit()
+    nuevo = {
+      "nombre": comentario.nombre,
+      "texto": comentario.texto,
+      "fecha": comentario.fecha.strftime("%Y-%m-%d %H:%M")
+    }
+    session_db.close()
+    return jsonify(comentario=nuevo), 200
+
+@app.route("/api/estadisticas/por-dia")
+def api_actividades_por_dia():
+    session_db = SessionLocal()
+    resultados = session_db.query(
+        func.date(Actividad.dia_hora_inicio),
+        func.count()
+    ).group_by(func.date(Actividad.dia_hora_inicio)).all()
+    session_db.close()
+
+    fechas = [r[0].strftime("%Y-%m-%d") for r in resultados]
+    cantidades = [r[1] for r in resultados]
+    return jsonify({"fechas": fechas, "cantidades": cantidades})
+
+
+@app.route("/api/estadisticas/por-tipo")
+def api_actividades_por_tipo():
+    session_db = SessionLocal()
+    resultados = session_db.query(
+        ActividadTema.tema,
+        func.count()
+    ).group_by(ActividadTema.tema).all()
+    session_db.close()
+
+    tipos = [r[0].capitalize() for r in resultados]
+    cantidades = [r[1] for r in resultados]
+    return jsonify({"tipos": tipos, "cantidades": cantidades})
+
+
+@app.route("/api/estadisticas/por-mes-horario")
+def api_actividades_por_mes_horario():
+    session_db = SessionLocal()
+    actividades = session_db.query(Actividad.dia_hora_inicio).all()
+    session_db.close()
+
+    # agrupar por mes y horario
+    conteo = defaultdict(lambda: {"mañana": 0, "mediodía": 0, "tarde": 0})
+
+    for (inicio,) in actividades:
+        mes = inicio.strftime("%Y-%m")
+        hora = inicio.hour
+        if hora < 12:
+            conteo[mes]["mañana"] += 1
+        elif 12 <= hora < 14:
+            conteo[mes]["mediodía"] += 1
+        else:
+            conteo[mes]["tarde"] += 1
+
+    meses = sorted(conteo.keys())
+    manana = [conteo[m]["mañana"] for m in meses]
+    mediodia = [conteo[m]["mediodía"] for m in meses]
+    tarde = [conteo[m]["tarde"] for m in meses]
+
+    return jsonify({"meses": meses, "manana": manana, "mediodia": mediodia, "tarde": tarde})
+
 
 if __name__ == "__main__":
     app.run(debug=True)
