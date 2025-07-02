@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es"
+      th:replace="~{fragments/layout :: layout('Evaluaciones')}">
+
+  <div th:fragment="content">
+    <section class="container">
+      <h2>Actividades para Evaluar</h2>
+      <table class="tabla-eval">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Fecha Inicio</th>
+            <th>Sector</th>
+            <th>Nombre</th>
+            <th>Tema</th>
+            <th>Nota</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="act : ${actividades}" th:data-id="${act.id}">
+            <td th:text="${act.id}">1</td>
+            <td th:text="${act.diaHoraInicio != null 
+                           ? #temporals.format(act.diaHoraInicio,'dd/MM/yyyy') 
+                           : '-'}">-</td>
+            <td th:text="${act.sector}">sector</td>
+            <td th:text="${act.nombre}">nombre</td>
+            <td th:text="${act.tema}">tema</td>
+            <td th:text="${act.getPromedio() != null 
+                           ? T(java.lang.String).format('%.0f',act.getPromedio()) 
+                           : '-'}">-</td>
+            <td><button class="btn-eval" th:data-id="${act.id}">Evaluar</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+    <script th:src="@{/js/evaluar.js}"></script>
+  </div>
+</html>
